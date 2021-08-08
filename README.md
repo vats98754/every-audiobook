@@ -2,8 +2,7 @@
 
 **Description**
 
-This is a GUI-based application built from Tkinter for XHacks (and to get more experience with GUI construction in python). 
-This project uses the gTTS and pygame (mixer) libraries in conjunction with the libgen-api library to find almost any book and convert it to an audiobook that you can listen to. 
+This is a GUI-based application built from Tkinter and uses the gTTS and pygame (mixer) libraries in conjunction with the libgen-api library to find almost any book and convert it to an audiobook that you can listen to. 
 The GUI itself has the following features:
 - pause/play, 
 - stop (stops the entire book), 
