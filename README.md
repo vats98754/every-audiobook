@@ -12,6 +12,7 @@ The GUI itself has the following features:
 - an exit button to start listening to another audiobook, 
 - a speed up/down button (this is in construction, because I couldn't find a solution online for speeding up an audio file, even with formulae on the sampling rate, in real-time).
 
+
 **Run Instructions**
 
 Just run the audiobook_gui.py file to start the GUI. The convert_to_iso.py file is a general python dictionary file that I plan to upload to PyPI because it solves
@@ -21,6 +22,7 @@ to create dictionaries that store this information. Ultimately, this conversion 
 
 As for the searchAndSpeak.py file, it is a demo of the core of all the GUI code that allows you to type in the title and language of a book and convert it into
 an audiobook of that language. It doesn't have all the additional features that comes with the GUI.
+
 
 **Motive**
 
