@@ -26,6 +26,5 @@ an audiobook of that language. It doesn't have all the additional features that 
 
 **Motive**
 
-I created this to be able to help my mom, who wants to listen to books because reading them strains her eyes, and since all the paid options for audiobooks are too expensive and their collections are certainly not as big as Libgenisis'. 
-In any case, I do want to develop this GUI to be able to have multiple books you can add in a list that allows you to pick and choose immediately which book you want to listen to, 
-but I just didn't have enough time due to the time limit on the Hackathon. I plan to do implement this change after the Hackathon finishes.
+I created this to be able to help the average audiobook consumer, who wants to listen to books because reading them strains their eyes or doing so saves them valuable time, and mainly because **all the paid options for audiobooks (like Audible) are too expensive for what they offer, and their collections are certainly not as big as Libgenisis'.**
+In any case, I do want to develop this GUI further to be able to have multiple books you can add in a list that allows you to pick and choose immediately which book you want to listen to, but I just didn't have enough time due to the time limit on the Hackathon. I plan to do implement these changes after the Hackathon finishes.
