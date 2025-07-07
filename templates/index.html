@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AudioGen - Transform Any Text to Premium Audiobooks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <svg class="nav-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                </svg>
+                <span class="nav-title">AudioGen</span>
+            </div>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#how-it-works" class="nav-link">How it Works</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Transform Any Text Into
+                    <span class="hero-accent">Premium Audiobooks</span>
+                </h1>
+                <p class="hero-description">
+                    Convert PDFs, books, and articles into high-quality audiobooks with human-like AI voices. 
+                    Access millions of books from Library Genesis and create your personal audio library in minutes.
+                </p>
+                <div class="hero-cta">
+                    <button class="btn btn-primary" onclick="scrollToConverter()">
+                        Start Converting Now
+                        <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="audio-wave">
+                    <div class="wave-bar" style="height: 20px; animation-delay: 0s;"></div>
+                    <div class="wave-bar" style="height: 40px; animation-delay: 0.1s;"></div>
+                    <div class="wave-bar" style="height: 60px; animation-delay: 0.2s;"></div>
+                    <div class="wave-bar" style="height: 35px; animation-delay: 0.3s;"></div>
+                    <div class="wave-bar" style="height: 55px; animation-delay: 0.4s;"></div>
+                    <div class="wave-bar" style="height: 25px; animation-delay: 0.5s;"></div>
+                    <div class="wave-bar" style="height: 45px; animation-delay: 0.6s;"></div>
+                    <div class="wave-bar" style="height: 65px; animation-delay: 0.7s;"></div>
+                    <div class="wave-bar" style="height: 30px; animation-delay: 0.8s;"></div>
+                    <div class="wave-bar" style="height: 50px; animation-delay: 0.9s;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Converter Section -->
+    <section id="converter" class="converter">
+        <div class="converter-container">
+            <div class="converter-header">
+                <h2 class="section-title">Create Your Audiobook</h2>
+                <p class="section-description">
+                    Search for any book or upload your own content. Choose from premium AI voices for the perfect listening experience.
+                </p>
+            </div>
+
+            <!-- Search Step -->
+            <div class="converter-step" id="search-step">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Find Your Book</h3>
+                </div>
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" id="book-search" placeholder="Enter book title, author, or topic..." class="search-input">
+                        <select id="language-select" class="search-select">
+                            <option value="English">English</option>
+                            <option value="Spanish">Spanish</option>
+                            <option value="French">French</option>
+                            <option value="German">German</option>
+                            <option value="Italian">Italian</option>
+                            <option value="Portuguese">Portuguese</option>
+                            <option value="Russian">Russian</option>
+                        </select>
+                        <button class="search-btn" onclick="searchBooks()">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+                            </svg>
+                            Search
+                        </button>
+                    </div>
+                    <div class="search-results" id="search-results"></div>
+                    <div class="search-loading" id="search-loading" style="display: none;">
+                        <div class="loading-spinner"></div>
+                        <p>Searching Library Genesis...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Voice Selection Step -->
+            <div class="converter-step" id="voice-step" style="display: none;">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Choose Your Voice</h3>
+                </div>
+                <div class="voice-selection">
+                    <div class="voice-engines" id="voice-engines">
+                        <!-- Voice engines will be populated by JavaScript -->
+                    </div>
+                    <div class="voice-settings" id="voice-settings">
+                        <!-- Voice settings will be populated by JavaScript -->
+                    </div>
+                    <div class="voice-preview">
+                        <button class="btn btn-secondary" onclick="previewVoice()">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                            </svg>
+                            Preview Voice
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Convert Step -->
+            <div class="converter-step" id="convert-step" style="display: none;">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Convert to Audiobook</h3>
+                </div>
+                <div class="convert-section">
+                    <div class="book-preview" id="book-preview">
+                        <!-- Selected book details will appear here -->
+                    </div>
+                    <button class="btn btn-primary btn-large" onclick="startConversion()">
+                        <svg viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                        </svg>
+                        Start Conversion
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Section -->
+    <section class="progress-section" id="progress-section" style="display: none;">
+        <div class="progress-container">
+            <div class="progress-header">
+                <h2 class="section-title">Converting Your Audiobook</h2>
+                <p class="section-description" id="progress-description">Please wait while we process your book...</p>
+            </div>
+            <div class="progress-visual">
+                <div class="progress-circle">
+                    <svg class="progress-ring" width="120" height="120">
+                        <circle class="progress-ring-circle" cx="60" cy="60" r="54" fill="transparent" stroke="#e5e7eb" stroke-width="8"/>
+                        <circle class="progress-ring-progress" cx="60" cy="60" r="54" fill="transparent" stroke="#000" stroke-width="8" stroke-linecap="round" stroke-dasharray="339.292" stroke-dashoffset="339.292"/>
+                    </svg>
+                    <div class="progress-percentage" id="progress-percentage">0%</div>
+                </div>
+                <div class="progress-details">
+                    <div class="progress-status" id="progress-status">Initializing...</div>
+                    <div class="progress-stats">
+                        <span id="current-page">0</span> / <span id="total-pages">0</span> pages
+                    </div>
+                </div>
+            </div>
+            <div class="progress-log" id="progress-log">
+                <!-- Progress messages will appear here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section" id="results-section" style="display: none;">
+        <div class="results-container">
+            <div class="results-header">
+                <h2 class="section-title">🎉 Your Audiobook is Ready!</h2>
+                <p class="section-description">Your audiobook has been successfully created. You can now listen to it or download individual chapters.</p>
+            </div>
+            <div class="audiobook-player" id="audiobook-player">
+                <!-- Audio player will be populated here -->
+            </div>
+            <div class="results-actions">
+                <button class="btn btn-primary" onclick="downloadAll()">
+                    <svg viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                    Download All Chapters
+                </button>
+                <button class="btn btn-secondary" onclick="startNew()">
+                    Create Another Audiobook
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="features-container">
+            <div class="features-header">
+                <h2 class="section-title">Why Choose AudioGen?</h2>
+                <p class="section-description">Advanced AI technology meets beautiful design for the ultimate audiobook experience.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Premium AI Voices</h3>
+                    <p class="feature-description">Choose from multiple high-quality AI voices that sound remarkably human, with support for multiple languages and accents.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Vast Library Access</h3>
+                    <p class="feature-description">Access millions of books from Library Genesis. From classics to modern publications, convert any PDF into an audiobook.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Lightning Fast</h3>
+                    <p class="feature-description">Our optimized conversion engine processes books in minutes, not hours. Get your audiobook ready for immediate listening.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Beautiful Interface</h3>
+                    <p class="feature-description">Designed with the same attention to detail as Y Combinator startups. Clean, intuitive, and delightful to use.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <svg class="footer-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                    </svg>
+                    <span class="footer-title">AudioGen</span>
+                </div>
+                <p class="footer-description">Transform any text into premium audiobooks with AI.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-section">
+                    <h4 class="footer-heading">Product</h4>
+                    <a href="#features" class="footer-link">Features</a>
+                    <a href="#pricing" class="footer-link">Pricing</a>
+                    <a href="#" class="footer-link">API</a>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-heading">Company</h4>
+                    <a href="#" class="footer-link">About</a>
+                    <a href="#" class="footer-link">Blog</a>
+                    <a href="#" class="footer-link">Careers</a>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-heading">Support</h4>
+                    <a href="#" class="footer-link">Help Center</a>
+                    <a href="#" class="footer-link">Contact</a>
+                    <a href="#" class="footer-link">Status</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 AudioGen. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

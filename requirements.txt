@@ -1,0 +1,10 @@
+flask==3.0.0
+flask-socketio==5.3.6
+gtts==2.4.0
+PyPDF2==3.0.1
+libgen-api-enhanced
+pygame==2.6.1
+pyttsx3==2.90
+openai==1.12.0
+python-socketio==5.10.0
+eventlet==0.33.3
