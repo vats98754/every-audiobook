@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AudioGen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+</head>
+<body>
+    <!-- Dashboard Navigation -->
+    <nav class="dashboard-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="/dashboard" class="nav-brand-link">
+                    <svg class="nav-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                    </svg>
+                    <span class="nav-title">AudioGen</span>
+                </a>
+            </div>
+            <div class="nav-user">
+                <span class="user-greeting">Hello, {{ current_user.name }}!</span>
+                <a href="/api/logout" class="btn btn-secondary">Sign Out</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <nav class="sidebar-nav">
+                <a href="#library" class="sidebar-link active" onclick="showSection('library')">
+                    <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    My Library
+                </a>
+                <a href="#create" class="sidebar-link" onclick="showSection('create')">
+                    <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Create New
+                </a>
+                <a href="#settings" class="sidebar-link" onclick="showSection('settings')">
+                    <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    Settings
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Library Section -->
+            <section id="library-section" class="dashboard-section active">
+                <div class="section-header">
+                    <h1 class="section-title">My Audiobook Library</h1>
+                    <p class="section-description">Manage and listen to your converted audiobooks</p>
+                </div>
+
+                <div class="library-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-audiobooks">{{ audiobooks|length }}</div>
+                        <div class="stat-label">Total Audiobooks</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="completed-audiobooks">
+                            {{ audiobooks|selectattr("status", "equalto", "completed")|list|length }}
+                        </div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="processing-audiobooks">
+                            {{ audiobooks|selectattr("status", "equalto", "processing")|list|length }}
+                        </div>
+                        <div class="stat-label">Processing</div>
+                    </div>
+                </div>
+
+                <div class="library-filters">
+                    <button class="filter-btn active" onclick="filterAudiobooks('all')">All</button>
+                    <button class="filter-btn" onclick="filterAudiobooks('completed')">Completed</button>
+                    <button class="filter-btn" onclick="filterAudiobooks('processing')">Processing</button>
+                    <button class="filter-btn" onclick="filterAudiobooks('failed')">Failed</button>
+                </div>
+
+                <div class="audiobooks-grid" id="audiobooks-grid">
+                    {% for audiobook in audiobooks %}
+                    <div class="audiobook-card" data-status="{{ audiobook.status }}">
+                        <div class="audiobook-header">
+                            <h3 class="audiobook-title">{{ audiobook.title }}</h3>
+                            <span class="status-badge status-{{ audiobook.status }}">{{ audiobook.status.title() }}</span>
+                        </div>
+                        <p class="audiobook-author">by {{ audiobook.author }}</p>
+                        <div class="audiobook-meta">
+                            <span class="meta-item">
+                                <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                                </svg>
+                                {{ audiobook.total_pages }} pages
+                            </span>
+                            <span class="meta-item">
+                                <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4m-6 0h6m-6 0a2 2 0 00-2 2v6a2 2 0 002 2h6a2 2 0 002-2V9a2 2 0 00-2-2"/>
+                                </svg>
+                                {{ audiobook.created_at.strftime('%Y-%m-%d') }}
+                            </span>
+                        </div>
+                        {% if audiobook.status == 'completed' %}
+                        <div class="audiobook-actions">
+                            <button class="btn btn-primary btn-sm" onclick="playAudiobook('{{ audiobook.id }}')">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <polygon points="5,3 19,12 5,21" fill="currentColor"/>
+                                </svg>
+                                Play
+                            </button>
+                            <button class="btn btn-secondary btn-sm" onclick="downloadAudiobook('{{ audiobook.id }}')">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                Download
+                            </button>
+                        </div>
+                        {% elif audiobook.status == 'processing' %}
+                        <div class="audiobook-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 45%"></div>
+                            </div>
+                            <span class="progress-text">Converting...</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- Create New Section -->
+            <section id="create-section" class="dashboard-section">
+                <div class="section-header">
+                    <h1 class="section-title">Create New Audiobook</h1>
+                    <p class="section-description">Search for books and add them to your library</p>
+                </div>
+
+                <!-- Enhanced Search -->
+                <div class="create-search-container">
+                    <div class="search-box-dashboard">
+                        <input type="text" id="dashboard-book-search" placeholder="Search for books by title, author, or topic..." class="search-input-dashboard">
+                        <select id="dashboard-language-select" class="search-select-dashboard">
+                            <option value="English">English</option>
+                            <option value="Spanish">Spanish</option>
+                            <option value="French">French</option>
+                            <option value="German">German</option>
+                            <option value="Italian">Italian</option>
+                            <option value="Portuguese">Portuguese</option>
+                            <option value="Russian">Russian</option>
+                        </select>
+                        <button class="search-btn-dashboard" onclick="searchBooksInDashboard()">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+                            </svg>
+                            Search Books
+                        </button>
+                    </div>
+                    
+                    <!-- Search Loading -->
+                    <div class="search-loading-dashboard" id="search-loading-dashboard" style="display: none;">
+                        <div class="loading-spinner"></div>
+                        <p>Searching millions of books...</p>
+                    </div>
+                    
+                    <!-- Search Results -->
+                    <div class="search-results-dashboard" id="search-results-dashboard" style="display: none;">
+                        <!-- Results will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings-section" class="dashboard-section">
+                <div class="section-header">
+                    <h1 class="section-title">Account Settings</h1>
+                    <p class="section-description">Manage your account preferences</p>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Profile Information</h3>
+                    <form class="settings-form">
+                        <div class="form-group">
+                            <label for="profile-name" class="form-label">Full Name</label>
+                            <input type="text" id="profile-name" class="form-input" value="{{ current_user.name }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="profile-email" class="form-label">Email</label>
+                            <input type="email" id="profile-email" class="form-input" value="{{ current_user.email }}" readonly>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Change Password</h3>
+                    <form class="settings-form">
+                        <div class="form-group">
+                            <label for="current-password" class="form-label">Current Password</label>
+                            <input type="password" id="current-password" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="new-password" class="form-label">New Password</label>
+                            <input type="password" id="new-password" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-new-password" class="form-label">Confirm New Password</label>
+                            <input type="password" id="confirm-new-password" class="form-input">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Password</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Audio Player Modal -->
+    <div id="audio-player-modal" class="modal" style="display: none;">
+        <div class="modal-content modal-audio-player">
+            <div class="modal-header">
+                <h3 id="player-title">Audiobook Player</h3>
+                <button class="modal-close" onclick="closeAudioPlayer()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="audio-player-container">
+                    <div class="audio-control-bar">
+                        <audio id="audio-element" controls autoplay>
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                    <div class="audio-navigation">
+                        <button id="prev-page" class="nav-btn" onclick="previousPage()" title="Previous Page">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            Previous Page
+                        </button>
+                        <span id="current-page-info" class="page-info">Page 1 of 10</span>
+                        <button id="next-page" class="nav-btn" onclick="nextPage()" title="Next Page">
+                            Next Page
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="audio-shortcuts">
+                        <p class="shortcuts-title">🎧 Keyboard Shortcuts:</p>
+                        <div class="shortcuts-grid">
+                            <span><kbd>Space</kbd> Play/Pause</span>
+                            <span><kbd>←</kbd> Previous Page</span>
+                            <span><kbd>→</kbd> Next Page</span>
+                            <span><kbd>↑</kbd> Volume Up</span>
+                            <span><kbd>↓</kbd> Volume Down</span>
+                            <span><kbd>Esc</kbd> Close Player</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>
