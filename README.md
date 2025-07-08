@@ -1,48 +1,38 @@
-# AudioGen - Transform Any Text Into Premium Audiobooks
+# AudioGen - Modern Audiobook Conversion Platform
 
-<div align="center">
+Transform any text into premium audiobooks with human-like AI voices. A sleek, professional web application inspired by Y Combinator startups.
 
-![AudioGen Logo](static/favicon.svg)
+## Features
 
-**A sleek, modern web application that converts PDFs and books into high-quality audiobooks using AI voices.**
+- **User Authentication**: Secure email/password registration and login
+- **Book Search**: Search millions of books via Open Library and Internet Archive  
+- **Book Preview**: View detailed book information, covers, and subjects before adding
+- **Personal Collection**: Save books to your library and convert them when ready
+- **Multiple Voice Engines**: Google Text-to-Speech, pyttsx3, and OpenAI TTS support
+- **Real-time Progress**: Live conversion tracking with WebSocket updates
+- **Personal Library**: Each user has their own audiobook collection with management tools
+- **Modern UI**: Clean, responsive design with preview modals and success notifications
+- **Download & Play**: Stream audiobooks page-by-page or download for offline use
 
-[Demo](#demo) • [Features](#features) • [Installation](#installation) • [Usage](#usage) • [API](#api)
-
-</div>
-
-## 🎯 Overview
-
-AudioGen is a cutting-edge web application designed with the same attention to detail and user experience as Y Combinator startups. Convert any PDF, book, or document into a premium audiobook experience with multiple AI voice options.
-
-### ✨ Key Features
-
-- **🎤 Premium AI Voices**: Choose from Google TTS, system voices, and OpenAI's latest voice models
-- **📚 Vast Library Access**: Search and download from millions of books via Library Genesis
-- **⚡ Lightning Fast**: Optimized conversion engine processes books in minutes
-- **🎨 Beautiful Interface**: Clean, modern design with real-time progress tracking
-- **🌐 Multi-language Support**: Support for 10+ languages and accents
-- **📱 Responsive Design**: Works perfectly on desktop, tablet, and mobile
-- **🔄 Real-time Updates**: WebSocket-powered live progress tracking
-
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
-- Python 3.9 or higher
-- Modern web browser
+- Python 3.8 or higher
+- Virtual environment (recommended)
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repo-url>
+   git clone <repository-url>
    cd every-audiobook
    ```
 
-2. **Create a virtual environment**
+2. **Set up virtual environment**
    ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
    ```
 
 3. **Install dependencies**
@@ -52,204 +42,201 @@ AudioGen is a cutting-edge web application designed with the same attention to d
 
 4. **Run the application**
    ```bash
-   python app.py
+   python app_simple.py
+   ```
+   
+   Or use the startup script:
+   ```bash
+   ./start.sh
    ```
 
 5. **Open your browser**
    Navigate to `http://localhost:5000`
 
-## 🎯 How It Works
+### Verification
 
-### 1. 🔍 Search for Books
-- Enter any book title, author, or topic
-- Search across millions of PDFs in Library Genesis
+The application will automatically:
+- Create the SQLite database (`audiobooks.db`)
+- Initialize all required tables (Users, Audiobooks)
+- Set up upload and output directories
+- Test database connectivity and schema
+
+You should see:
+```
+🔗 Using local SQLite database: audiobooks.db
+✅ Database tables created successfully
+✅ Database schema verified: ['users', 'audiobooks']
+✅ Database initialized successfully
+🚀 Starting AudioGen server...
+* Running on http://127.0.0.1:5000
+```
+
+## 📖 How to Use
+
+### 1. Create Account
+- Visit the homepage and click "Get Started"
+- Register with your email and password
+- Sign in to access your dashboard
+
+### 2. Search for Books
+- Use the search bar to find books by title, author, or topic
 - Select your preferred language
+- Choose from search results powered by Open Library
+- **Preview books** to see detailed information, cover images, and subjects
+- **Add books to your collection** to save them for later conversion
 
-### 2. 🎤 Choose Your Voice
-- **Google TTS**: Cloud-based, high-quality voices
-- **System TTS**: Local system voices (Windows/macOS)
-- **OpenAI TTS**: Premium AI voices (requires API key)
+### 3. Manage Your Collection
+- **Browse your library** in the dashboard to see saved and converted books
+- **Preview saved books** and start conversion when ready
+- **Configure voice settings** before starting conversion
+- **Track conversion progress** in real-time
 
-### 3. 🎵 Convert & Listen
-- Real-time conversion progress
-- Chapter-by-chapter audio generation
-- Instant playback and download options
+### 4. Convert & Manage
+- Start conversion and watch real-time progress
+- Access your personal audiobook library
+- Play audiobooks page-by-page or download files
 
-## 🏗️ Architecture
+## Architecture
+
+### Backend (Flask)
+- **Authentication**: Flask-Login with secure password hashing
+- **Database**: SQLAlchemy with SQLite (easily upgradeable to PostgreSQL)
+- **Real-time Updates**: Socket.IO for conversion progress
+- **Book Search**: Open Library and Internet Archive APIs
+- **Audio Generation**: Multiple TTS engine support
+
+### Frontend
+- **Modern UI**: Clean, responsive design with Inter font
+- **Real-time**: Socket.IO client for live updates  
+- **Dashboard**: Personal library management interface
+- **Audio Player**: Built-in page-by-page audio player
+
+### Database Schema
+- **Users**: Authentication and profile data
+- **Audiobooks**: Conversion metadata, progress, and settings
+
+
+## 🛠️ Technical Stack
+
+- **Backend**: Flask, SQLAlchemy, Flask-Login, Flask-SocketIO
+- **Frontend**: Vanilla JavaScript, Socket.IO, Modern CSS
+- **TTS Engines**: gTTS, pyttsx3, OpenAI TTS
+- **APIs**: Open Library, Internet Archive
+- **Database**: SQLite (development), PostgreSQL (production)
+
+## 📁 Project Structure
 
 ```
-AudioGen/
-├── app.py                 # Flask application & API routes
+every-audiobook/
+├── app_simple.py          # Main Flask application
+├── database.py            # Database models and helpers
+├── requirements.txt       # Python dependencies
+├── start.sh              # Startup script
 ├── templates/
-│   └── index.html        # Main frontend template
+│   ├── index.html         # Landing page
+│   ├── dashboard.html     # User dashboard
+│   └── auth/
+│       ├── login.html     # Login page
+│       └── register.html  # Registration page
 ├── static/
-│   ├── css/
-│   │   └── style.css     # Modern styling
+│   ├── css/style.css      # Main stylesheet
 │   ├── js/
-│   │   └── app.js        # Frontend JavaScript
-│   └── favicon.svg       # App icon
-├── uploads/              # Temporary PDF storage
-├── output/               # Generated audio files
-└── requirements.txt      # Python dependencies
+│   │   ├── app.js         # Main application JS
+│   │   └── dashboard.js   # Dashboard functionality
+│   └── favicon.svg        # Site icon
+├── instance/              # SQLite database location
+├── uploads/               # Temporary PDF storage
+└── output/               # Generated audio files
 ```
 
-### Technology Stack
-
-- **Backend**: Flask + Flask-SocketIO
-- **Frontend**: Vanilla JavaScript + Modern CSS
-- **Audio Processing**: gTTS, pyttsx3, OpenAI TTS
-- **PDF Processing**: PyPDF2
-- **Real-time Updates**: WebSockets
-- **Book Search**: Library Genesis API
-
-## 🔧 Configuration
-
-### Voice Engines
-
-#### Google Text-to-Speech (gTTS)
-- **Pros**: High quality, cloud-based, multiple languages
-- **Cons**: Requires internet connection
-- **Setup**: Works out of the box
-
-#### System TTS (pyttsx3)
-- **Pros**: Offline, fast, uses system voices
-- **Cons**: Quality depends on system
-- **Setup**: Automatic detection of system voices
-
-#### OpenAI TTS
-- **Pros**: Premium quality, human-like voices
-- **Cons**: Requires API key and credits
-- **Setup**: Add OpenAI API key to environment variables
-  ```bash
-  export OPENAI_API_KEY="your-api-key-here"
-  ```
+## ⚙️ Configuration
 
 ### Environment Variables
-
 ```bash
-# Optional: OpenAI API Key for premium voices
-OPENAI_API_KEY=your_openai_api_key
-
-# Optional: Custom upload limits
-MAX_CONTENT_LENGTH=104857600  # 100MB
-
-# Optional: Custom port
-PORT=5000
+export SECRET_KEY="your-secret-key-here"
+export DATABASE_URL="sqlite:///audiobooks.db"  # or PostgreSQL URL
+export OPENAI_API_KEY="your-openai-key"  # Optional, for OpenAI TTS
 ```
 
-## 📊 API Documentation
+### Voice Engine Configuration
+- **Google TTS**: Automatic, no setup required
+- **pyttsx3**: System TTS, works offline
+- **OpenAI TTS**: Requires API key, premium quality
 
-### Search Books
-```http
-POST /api/search-libgen
-Content-Type: application/json
+## 🔧 Development
 
-{
-  "title": "The Great Gatsby",
-  "language": "English"
-}
+### Running in Development Mode
+```bash
+python app_simple.py
+```
+The app runs with debug mode enabled on `http://localhost:5000`
+
+### Database Initialization
+The database is automatically created and initialized on first run. To reset:
+```bash
+rm audiobooks.db
+python app_simple.py
 ```
 
-### Start Conversion
-```http
-POST /api/convert
-Content-Type: application/json
-
-{
-  "title": "The Great Gatsby",
-  "language": "English",
-  "voice_engine": "gtts",
-  "voice_settings": {
-    "language": "en",
-    "slow": false
-  }
-}
+### Environment Variables
+```bash
+export SECRET_KEY="your-secret-key-here"
+export DATABASE_URL="sqlite:///audiobooks.db"  # or PostgreSQL URL
+export DB_PATH="audiobooks.db"  # Alternative to DATABASE_URL for local SQLite
+export OPENAI_API_KEY="your-openai-key"  # Optional, for OpenAI TTS
 ```
 
-### Get Available Voices
-```http
-GET /api/available-voices
+## 🚀 Deployment
+
+### Production Checklist
+1. Set strong `SECRET_KEY` environment variable
+2. Use PostgreSQL database for production
+3. Configure reverse proxy (nginx recommended)
+4. Set up SSL certificates
+5. Use production WSGI server (gunicorn)
+
+### Example Production Command
+```bash
+gunicorn --worker-class eventlet -w 1 --bind 0.0.0.0:5000 app:app
 ```
 
-### Download Audio Chapter
-```http
-GET /api/download/{conversion_id}/{page_number}
-```
+## Security Features
 
-## 🎨 Design Philosophy
+- Password hashing with bcrypt
+- CSRF protection with Flask-WTF
+- Session management with Flask-Login
+- User data isolation in database
+- Secure file upload handling
 
-AudioGen follows modern design principles inspired by successful Y Combinator startups:
+## Roadmap
 
-- **Minimalist Interface**: Clean, distraction-free design
-- **Progressive Disclosure**: Information revealed as needed
-- **Immediate Feedback**: Real-time progress and status updates
-- **Mobile-First**: Responsive design that works everywhere
-- **Accessibility**: High contrast, keyboard navigation, screen reader support
+- [ ] Google OAuth integration
+- [ ] Bulk audiobook downloads (ZIP)
+- [ ] Voice cloning and custom voices
+- [ ] Advanced search filters
+- [ ] Audio quality settings
+- [ ] Mobile app companion
+- [ ] API for third-party integrations
 
-## 🔮 Roadmap
+## Features
 
-- [ ] **Batch Processing**: Convert multiple books simultaneously
-- [ ] **Voice Cloning**: Train custom voices from samples
-- [ ] **Advanced Audio**: Background music, sound effects
-- [ ] **Social Features**: Share audiobooks, create playlists
-- [ ] **Mobile Apps**: Native iOS and Android applications
-- [ ] **API Access**: Developer API for third-party integrations
+### Book Preview and Collection Management
+- **Search Results Enhancement**: Each search result now shows preview and "Add to Collection" buttons
+- **Book Preview Modal**: Click "Preview" to see detailed book information, cover image, and subjects
+- **Add to Collection**: Save books to your personal library without converting them immediately
+- **Convert from Collection**: Start conversion for saved books with custom voice settings
+- **Authentication Handling**: Graceful prompts for non-logged-in users trying to save books
 
-## 🤝 Contributing
+### UI/UX Improvements
+- **Modern Search Results**: Enhanced layout with action buttons and improved spacing
+- **Success Notifications**: Toast-style notifications for successful actions
+- **Preview Modal**: Large, responsive modal with book details and cover images
+- **Authentication Prompts**: User-friendly signup/login prompts for collection features.
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+## Acknowledgments
 
-### Development Setup
+- Open Library for free book search API
+- Internet Archive for book hosting
+- Google for Text-to-Speech services
+- Y Combinator for design inspiration
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature-name`
-3. Make your changes and test thoroughly
-4. Submit a pull request with a clear description
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Library Genesis for providing access to books
-- Google, OpenAI, and system TTS providers for voice synthesis
-- The open-source community for amazing libraries
-
----
-
-<div align="center">
-
-**Made with ❤️ for book lovers everywhere**
-
-[⭐ Star this repo](../../stargazers) • [🐛 Report a bug](../../issues) • [💡 Request a feature](../../issues)
-
-</div>
-
-**Description**
-
-This is a GUI-based application built from Tkinter and uses the gTTS and pygame (mixer) libraries in conjunction with the libgen-api library to find almost any book and convert it to an audiobook that you can listen to. 
-The GUI itself has the following features:
-- pause/play, 
-- stop (stops the entire book), 
-- next/previous page, 
-- volume up/down (this increases/decreases the volume of the audio itself, not of the system on which the audio is being played), 
-- an exit button to start listening to another audiobook, 
-- a speed up/down button (this is in construction, because I couldn't find a solution online for speeding up an audio file, even with formulae on the sampling rate, in real-time).
-
-
-**Run Instructions**
-
-Just run the audiobook_gui.py file to start the GUI. The convert_to_iso.py file is a general python dictionary file that I plan to upload to PyPI because it solves
-a problem I haven't seen solved elsewhere - it takes a language (e.g. Spanish) and converts it to its ISO-639 equivalent (in four different forms: ISO-639-1,
-ISO-639-2T, ISO-639-2B, and ISO-639-3). I scraped an excel sheet from an official source (the code is commented at the top of the aforementioned file) in order
-to create dictionaries that store this information. Ultimately, the convert(type, lang) function was used for the text-to-speech constructor (from audiobook_gui.py, line 56, in line 80, for the gTTS constructor).
-
-As for the searchAndSpeak.py file, it is a demo of the core of all the GUI code that allows you to type in the title and language of a book and convert it into
-an audiobook of that language. It doesn't have all the additional features that comes with the GUI.
-
-
-**Motive**
-
-I created this to be able to help the average audiobook consumer, who wants to listen to books because reading them strains their eyes or doing so saves them valuable time, and mainly because **all the paid options for audiobooks (like Audible) are too expensive for what they offer, and their collections are certainly not as big as Libgenisis'.**
-In any case, I do want to develop this GUI further to be able to have multiple books you can add in a list that allows you to pick and choose immediately which book you want to listen to, but I just didn't have enough time due to the time limit on the Hackathon. I plan to do implement these changes after the Hackathon finishes.
