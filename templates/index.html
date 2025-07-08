@@ -13,15 +13,20 @@
     <nav class="nav">
         <div class="nav-container">
             <div class="nav-brand">
-                <svg class="nav-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
-                </svg>
-                <span class="nav-title">AudioGen</span>
+                <a href="/" class="nav-brand-link" id="nav-brand-link">
+                    <svg class="nav-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                    </svg>
+                    <span class="nav-title">AudioGen</span>
+                </a>
             </div>
-            <div class="nav-links">
+            <div class="nav-links" id="nav-links">
                 <a href="#features" class="nav-link">Features</a>
                 <a href="#how-it-works" class="nav-link">How it Works</a>
-                <a href="#pricing" class="nav-link">Pricing</a>
+                <div id="auth-buttons">
+                    <a href="{{ url_for('login') }}" class="btn btn-secondary">Sign In</a>
+                    <a href="{{ url_for('register') }}" class="btn btn-primary">Get Started</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -39,12 +44,13 @@
                     Access millions of books from Library Genesis and create your personal audio library in minutes.
                 </p>
                 <div class="hero-cta">
-                    <button class="btn btn-primary" onclick="scrollToConverter()">
-                        Start Converting Now
+                    <a href="{{ url_for('register') }}" class="btn btn-primary">
+                        Get Started Free
                         <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
                         </svg>
-                    </button>
+                    </a>
+                    <p class="cta-note">No credit card required • Free forever</p>
                 </div>
             </div>
             <div class="hero-visual">
@@ -70,8 +76,15 @@
             <div class="converter-header">
                 <h2 class="section-title">Create Your Audiobook</h2>
                 <p class="section-description">
-                    Search for any book or upload your own content. Choose from premium AI voices for the perfect listening experience.
+                    Sign up for free to search millions of books and convert them to audiobooks with premium AI voices.
                 </p>
+                <div class="auth-prompt">
+                    <p>Ready to get started?</p>
+                    <div class="auth-buttons">
+                        <a href="{{ url_for('register') }}" class="btn btn-primary">Create Free Account</a>
+                        <a href="{{ url_for('login') }}" class="btn btn-secondary">Sign In</a>
+                    </div>
+                </div>
             </div>
 
             <!-- Search Step -->
