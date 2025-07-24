@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="en"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>AudioGen - Transform Any Text to Premium Audiobooks</title>    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">    <link rel="stylesheet" href="style.css">    <link rel="icon" type="image/svg+xml" href="static/favicon.svg"></head><body>    <!-- Navigation -->    <nav class="nav">        <div class="nav-container">            <div class="nav-brand">                <a href="#" class="nav-brand-link">                    <svg class="nav-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor">                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>                    </svg>                    <span class="nav-title">AudioGen</span>                </a>            </div>            <div class="nav-links">                <a href="#features" class="nav-link">Features</a>                <a href="#search" class="nav-link">Search Books</a>                <a href="#installation" class="nav-link">Installation</a>                <div id="auth-buttons">                    <a href="https://github.com/vats98754/every-audiobook" class="btn btn-secondary">View on GitHub</a>                    <a href="#search" class="btn btn-primary">Try Now</a>                </div>            </div>        </div>    </nav>    <!-- Hero Section -->    <section class="hero">        <div class="hero-container">            <div class="hero-content">                <h1 class="hero-title">                    Transform Any Text Into                    <span class="hero-accent">Premium Audiobooks</span>                </h1>                <p class="hero-description">                    Convert PDFs, books, and articles into high-quality audiobooks with human-like AI voices.                     Access millions of books from Open Library and create your personal audio library in minutes.                </p>                <div class="hero-cta">                    <a href="#search" class="btn btn-primary btn-large">                        Search Books Now                        <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor">                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>                        </svg>                    </a>                    <a href="#installation" class="btn btn-secondary btn-large">                        Install Locally                        <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor">                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>                        </svg>                    </a>                </div>            </div>            <div class="hero-visual">                <div class="demo-card">                    <div class="demo-header">                        <div class="demo-dots">                            <span class="dot red"></span>                            <span class="dot yellow"></span>                            <span class="dot green"></span>                        </div>                        <span class="demo-title">AudioGen</span>                    </div>                    <div class="demo-content">                        <div class="demo-search-bar">                            <svg class="search-icon" viewBox="0 0 20 20" fill="currentColor">                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>                            </svg>                            <span>Search millions of books...</span>                        </div>                        <div class="demo-book">                            <div class="demo-book-cover"></div>                            <div class="demo-book-info">                                <div class="demo-book-title"></div>                                <div class="demo-book-author"></div>                                <div class="demo-book-meta"></div>                            </div>                        </div>                        <div class="demo-audio-wave">                            <div class="wave-bar"></div>                            <div class="wave-bar"></div>                            <div class="wave-bar"></div>                            <div class="wave-bar"></div>                            <div class="wave-bar"></div>                        </div>                    </div>                </div>            </div>        </div>    </section>    <!-- Book Search Section -->    <section class="search-section" id="search">        <div class="search-container">            <div class="section-header">                <h2 class="section-title">Search Free Audiobooks</h2>                <p class="section-description">                    Discover millions of books from Open Library and Internet Archive.                     Preview book details and see what's available for conversion.                </p>            </div>                        <div class="search-box">                <div class="search-input-container">                    <svg class="search-input-icon" viewBox="0 0 20 20" fill="currentColor">                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>                    </svg>                    <input type="text"                            id="book-search"                            class="search-input"                            placeholder="Search by title, author, or topic..."                            onkeypress="if(event.key==='Enter') searchBooks()">                </div>                <select id="language-select" class="search-select">                    <option value="en">English</option>                    <option value="es">Spanish</option>                    <option value="fr">French</option>                    <option value="de">German</option>                    <option value="it">Italian</option>                    <option value="pt">Portuguese</option>                    <option value="ru">Russian</option>                    <option value="zh">Chinese</option>                    <option value="ja">Japanese</option>                    <option value="ko">Korean</option>                </select>                <button class="search-btn" onclick="searchBooks()">                    <svg viewBox="0 0 20 20" fill="currentColor">                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>                    </svg>                    Search                </button>            </div>            <!-- Search Loading -->            <div id="search-loading" class="search-loading" style="display: none;">                <div class="loading-spinner"></div>                <p>Searching millions of books...</p>            </div>            <!-- Search Results -->            <div id="search-results" class="search-results" style="display: none;">                <!-- Results will be populated here -->            </div>        </div>    </section>    <!-- Features Section -->    <section class="features" id="features">        <div class="features-container">            <div class="section-header">                <h2 class="section-title">Powerful Features</h2>                <p class="section-description">Everything you need to create professional audiobooks</p>            </div>            <div class="features-grid">                <div class="feature-card">                    <div class="feature-icon">                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>                        </svg>                    </div>                    <h3 class="feature-title">Book Search</h3>                    <p class="feature-description">Search millions of books via Open Library and Internet Archive</p>                </div>                <div class="feature-card">                    <div class="feature-icon">                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>                        </svg>                    </div>                    <h3 class="feature-title">Book Preview</h3>                    <p class="feature-description">View detailed book information, covers, and subjects before adding</p>                </div>                <div class="feature-card">                    <div class="feature-icon">                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>                        </svg>                    </div>                    <h3 class="feature-title">Multiple Voice Engines</h3>                    <p class="feature-description">Google Text-to-Speech, pyttsx3, and OpenAI TTS support</p>                </div>                <div class="feature-card">                    <div class="feature-icon">                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>                        </svg>                    </div>                    <h3 class="feature-title">Real-time Progress</h3>                    <p class="feature-description">Live conversion tracking with WebSocket updates</p>                </div>                <div class="feature-card">                    <div class="feature-icon">                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>                        </svg>                    </div>                    <h3 class="feature-title">Personal Library</h3>                    <p class="feature-description">Each user has their own audiobook collection with management tools</p>                </div>                <div class="feature-card">                    <div class="feature-icon">                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>                        </svg>                    </div>                    <h3 class="feature-title">Download & Play</h3>                    <p class="feature-description">Stream audiobooks page-by-page or download for offline use</p>                </div>            </div>        </div>    </section>    <!-- How it Works Section -->    <section class="how-it-works" id="how-it-works">        <div class="how-it-works-container">            <div class="section-header">                <h2 class="section-title">How It Works</h2>                <p class="section-description">Simple 3-step process to create your audiobooks</p>            </div>            <div class="steps-grid">                <div class="step-card">                    <div class="step-number">1</div>                    <h3 class="step-title">Search & Preview</h3>
+                    <p class="step-description">Search millions of books and preview detailed information before selecting</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Install & Setup</h3>
+                    <p class="step-description">Download and run AudioGen locally with your preferred voice settings</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Convert & Listen</h3>
+                    <p class="step-description">Convert books to audio and enjoy your personalized audiobook library</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Section -->
+    <section class="installation" id="installation">
+        <div class="installation-container">
+            <div class="section-header">
+                <h2 class="section-title">Quick Installation</h2>
+                <p class="section-description">Get AudioGen running locally in minutes</p>
+            </div>
+            <div class="install-steps">
+                <div class="install-step">
+                    <h3>1. Clone the Repository</h3>
+                    <div class="code-block">
+                        <code>git clone https://github.com/vats98754/every-audiobook.git<br>cd every-audiobook</code>
+                        <button class="copy-btn" onclick="copyToClipboard('git clone https://github.com/vats98754/every-audiobook.git\ncd every-audiobook')">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"/>
+                                <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="install-step">
+                    <h3>2. Set up Virtual Environment</h3>
+                    <div class="code-block">
+                        <code>python -m venv .venv<br>source .venv/bin/activate</code>
+                        <button class="copy-btn" onclick="copyToClipboard('python -m venv .venv\nsource .venv/bin/activate')">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"/>
+                                <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="install-step">
+                    <h3>3. Install Dependencies</h3>
+                    <div class="code-block">
+                        <code>pip install -r requirements.txt</code>
+                        <button class="copy-btn" onclick="copyToClipboard('pip install -r requirements.txt')">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"/>
+                                <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="install-step">
+                    <h3>4. Run the Application</h3>
+                    <div class="code-block">
+                        <code>python app_simple.py</code>
+                        <button class="copy-btn" onclick="copyToClipboard('python app_simple.py')">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"/>
+                                <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                        </svg>
+                        <span>AudioGen</span>
+                    </div>
+                    <p>Transform any text into premium audiobooks with AI voices.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h4>Product</h4>
+                        <a href="#features">Features</a>
+                        <a href="#search">Search Books</a>
+                        <a href="#installation">Installation</a>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Resources</h4>
+                        <a href="https://github.com/vats98754/every-audiobook">GitHub</a>
+                        <a href="https://github.com/vats98754/every-audiobook/blob/main/README.md">Documentation</a>
+                        <a href="https://github.com/vats98754/every-audiobook/issues">Support</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AudioGen. Open source project.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Book Preview Modal -->
+    <div id="book-modal" class="modal" style="display: none;">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3>Book Preview</h3>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Preview content will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
